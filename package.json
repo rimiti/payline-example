@@ -1,0 +1,13 @@
+{
+  "name": "payline-example",
+  "version": "1.0.0",
+  "description": "Payline example",
+  "main": "index.js",
+  "repository": "git@github.com:rimiti/payline-example.git",
+  "author": "Dimitri DO BAIRRO <dimitri.dobairro@dimsolution.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "soap": "^0.29.0"
+  }
+}
