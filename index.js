@@ -1,6 +1,7 @@
 const soap = require('soap');
 
-const url = 'https://homologation.payline.com/V4/services/WebPaymentAPI?wsdl';
+const url = 'https://homologation.payline.com/V4/services/WebPaymentAPI';
+const wsdl = `${url}?wsdl`;
 const { PAYLINE_USERNAME,  PAYLINE_PASSWORD, PAYLINE_CONTRACT } = process.env;
 
 const data = {
@@ -21,7 +22,7 @@ const data = {
     date: '09/09/2019 15:38',
     deliveryExpectedDate: '10/10/2019'
   },
-  selectedContractList: { selectedContract: '1234567_1' },
+  selectedContractList: { selectedContract: PAYLINE_CONTRACT },
   buyer: {
     lastName: 'TEST',
     firstName: 'Charlotte',
@@ -75,12 +76,18 @@ const data = {
 };
 
 
-soap.createClient(url, function(err, client) {
+soap.createClient(wsdl, (err, client) => {
   client.setSecurity(
     new soap.BasicAuthSecurity(PAYLINE_USERNAME, PAYLINE_PASSWORD)
   );
 
-  client.doWebPayment(data, (err, result) => {
-    console.log(result);
+  client.setEndpoint(url);
+
+  client.doWebPayment(data, (error, result) => {
+    if(error) {
+      console.error(error);
+    }
+
+    console.log(JSON.stringify(result));
   });
 });
